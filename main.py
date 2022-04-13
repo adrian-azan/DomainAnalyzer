@@ -5,16 +5,19 @@ import csv
 ote = "https://api.ote-godaddy.com"
 headers = dict()
 
-def DomainDetails(domainName):
+def DomainDetails(domainGroup):
 
     params = {
-        'domain': domainName,
         'checkType': 'FULL'
     }
+    body = {
+        "domains": domainGroup
+    }
 
-    response = requests.get('https://api.ote-godaddy.com/v1/domains/available', headers=headers, params=params)
-    if response.status_code == 200:
+    response = requests.post('https://api.ote-godaddy.com/v1/domains/available', headers=headers, params=params,json=domainGroup)
+    if response.status_code == 200 or response.status_code == 203:
         return response.json()
+
 
     return None
 
@@ -61,8 +64,15 @@ def main():
      'Accept': 'application/json'}
 
 
-    for i in LoadDomainNames(5):
-        print(i)
+    domainGroups = LoadDomainNames(10)
+
+    for group in domainGroups:
+        domainDetails = DomainDetails(group)
+        if domainDetails != None:
+            for domain in domainDetails["domains"]:
+                print("{:<5}{:<20}${:.2f}".format(domain["available"],domain["domain"],float(domain["price"])/1000000))
+
+
 
 
 
