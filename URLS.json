@@ -1,0 +1,15 @@
+{
+  "environment": "sandbox",
+
+  "production":
+  {
+    "availableURL": "https://api.godaddy.com/v1/domains/available",
+    "appraisalURL": "https://api.godaddy.com/v1/appraisal"
+  },
+
+  "sandbox":
+  {
+    "availableURL": "https://api.ote-godaddy.com/v1/domains/available",
+    "appraisalURL": "https://api.ote-godaddy.com/v1/appraisal"
+  }
+}
